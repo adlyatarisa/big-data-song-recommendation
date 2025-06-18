@@ -1,0 +1,31 @@
+# Data files (CSV terlalu besar untuk GitHub)
+data/raw/*.csv
+data/processed/*.csv
+data/models/*.pkl
+data/models/*.joblib
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Logs
+*.log
