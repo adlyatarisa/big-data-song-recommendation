@@ -1,7 +1,8 @@
 services:
   # Kafka for streaming
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: docker-zookeeper-1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -9,93 +10,109 @@ services:
       - "2181:2181"
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: docker-kafka-1
     depends_on:
       - zookeeper
-    ports:
-      - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
 
   # MinIO for object storage
   minio:
     image: minio/minio:latest
-    ports:
-      - "9000:9000"
-      - "9001:9001"
+    container_name: docker-minio-1
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin123
-    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
     volumes:
       - minio_data:/data
+    command: server /data --console-address ":9001"
 
-  # Apache Spark for ML Training
-  spark-master:
-    image: bitnami/spark:latest
-    ports:
-      - "8080:8080"
-      - "7077:7077"
-    environment:
-      - SPARK_MODE=master
-      - SPARK_RPC_AUTHENTICATION_ENABLED=no
-      - SPARK_RPC_ENCRYPTION_ENABLED=no
-      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-      - SPARK_SSL_ENABLED=no
-
-  spark-worker:
-    image: bitnami/spark:latest
-    depends_on:
-      - spark-master
-    environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_MEMORY=1G
-      - SPARK_WORKER_CORES=1
-
-  # Trino for querying
-  trino:
-    image: trinodb/trino:latest
-    ports:
-      - "8081:8080"
-
-  # Song Recommendation App (Backend API)
-  song-recommendation-app:
-    build:
-      context: .
+  # Streaming Service
+  streaming-service:
+    build: 
+      context: ..
       dockerfile: docker/Dockerfile
-    ports:
-      - "5000:5000"
+    container_name: streaming-service
     depends_on:
       - kafka
       - minio
-      - spark-master
     environment:
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
       - MINIO_ENDPOINT=minio:9000
-      - SPARK_MASTER_URL=spark://spark-master:7077
     volumes:
-      - ./data:/app/data
-      - ./src:/app/src
+      - ../data:/app/data
+    command: python src/run_streaming.py
 
-  # Streamlit for visualization (Frontend)
-  streamlit-app:
-    build:
-      context: .
+  # ML Training Service
+  training-service:
+    build: 
+      context: ..
       dockerfile: docker/Dockerfile
+    container_name: training-service
+    depends_on:
+      - kafka
+      - minio
+      - streaming-service
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - MINIO_ENDPOINT=minio:9000
+      - SPARK_LOCAL_IP=127.0.0.1
+    volumes:
+      - ../data:/app/data
+    command: python src/train_models.py
+
+  # API Service
+  api-service:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: api-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../data:/app/data
+    command: python src/app_optimized.py  # ← Use optimized version
+    environment:
+      - PYTHONUNBUFFERED=1
+      - SPARK_LOCAL_DIRS=/tmp/spark
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # Streamlit Dashboard
+  dashboard:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: dashboard
+    depends_on:
+      - api-service
+    environment:
+      - API_URL=http://api-service:5000
     ports:
       - "8501:8501"
-    depends_on:
-      - song-recommendation-app
-    environment:
-      - API_URL=http://song-recommendation-app:5000
     volumes:
-      - ./data:/app/data
-      - ./src:/app/src
-    command: ["streamlit", "run", "src/streamlit_app.py", "--server.address", "0.0.0.0"]
+      - ../data:/app/data
+    command: streamlit run src/streamlit_app.py --server.address 0.0.0.0
 
 volumes:
   minio_data:
