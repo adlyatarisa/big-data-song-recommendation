@@ -1,5 +1,6 @@
 # Data files (CSV terlalu besar untuk GitHub)
 data/raw/*.csv
+data/raw/*.json
 data/processed/*.csv
 data/models/*.pkl
 data/models/*.joblib
