@@ -1,0 +1,20 @@
+{
+  "model_type": "content_based_cosine",
+  "n_tracks": 72,
+  "audio_features": [
+    "acousticness",
+    "danceability",
+    "energy",
+    "instrumentalness",
+    "liveness",
+    "loudness",
+    "speechiness",
+    "tempo",
+    "valence"
+  ],
+  "text_features": [
+    "artist_name",
+    "emotion"
+  ],
+  "training_timestamp": "2025-06-20T15:10:31.645804"
+}

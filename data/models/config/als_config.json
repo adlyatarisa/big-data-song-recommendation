@@ -1,0 +1,22 @@
+{
+  "model_type": "ALS",
+  "hyperparameters": {
+    "rank": 50,
+    "maxIter": 10,
+    "regParam": 0.1,
+    "alpha": 1.0,
+    "implicitPrefs": true,
+    "seed": 42
+  },
+  "training_config": {
+    "batch_size": 1000,
+    "validation_split": 0.2,
+    "early_stopping": true,
+    "checkpoint_frequency": 5
+  },
+  "performance_thresholds": {
+    "min_rmse": 0.8,
+    "min_precision_at_k": 0.15,
+    "min_recall_at_k": 0.10
+  }
+}

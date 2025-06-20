@@ -2,8 +2,23 @@
 data/raw/*.csv
 data/raw/*.json
 data/processed/*.csv
+
+# Models (large files)
 data/models/*.pkl
 data/models/*.joblib
+data/models/*.model
+data/models/*/model_*
+data/models/versions/
+
+# Keep model configs and metadata
+!data/models/config/
+!data/models/metadata/
+!data/models/README.md
+
+# Batch files (generated)
+data/batches/raw/*.json
+data/batches/processed/*.json
+data/batches/aggregated/*.json
 
 # Python
 __pycache__/
@@ -30,3 +45,10 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# MLflow tracking
+mlruns/
+mlflow.db

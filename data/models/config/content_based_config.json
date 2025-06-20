@@ -1,0 +1,22 @@
+{
+  "model_type": "ContentBased",
+  "feature_config": {
+    "audio_features": [
+      "acousticness", "danceability", "energy", "instrumentalness",
+      "liveness", "loudness", "speechiness", "tempo", "valence"
+    ],
+    "categorical_features": ["key", "mode", "time_signature"],
+    "text_features": ["artist_name", "emotion"],
+    "normalization": "standard_scaler"
+  },
+  "similarity_config": {
+    "metric": "cosine",
+    "n_neighbors": 100,
+    "algorithm": "auto"
+  },
+  "recommendation_config": {
+    "default_num_recommendations": 10,
+    "diversity_weight": 0.3,
+    "popularity_boost": 0.1
+  }
+}
