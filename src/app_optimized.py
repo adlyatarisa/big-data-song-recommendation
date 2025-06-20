@@ -2,6 +2,10 @@ from flask import Flask, jsonify, request
 import json
 import os
 import logging
+import requests
+from datetime import datetime
+
+import pandas as pd
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -18,14 +22,14 @@ fallback_mode = False
 SAMPLE_SONGS = [
     {"id": "4uLU6hMCjMI75M1A2tKUQC", "name": "Shape of You", "artist": "Ed Sheeran", "popularity": 95},
     {"id": "7qiZfU4dY1lWllzX7mPBI3", "name": "Blinding Lights", "artist": "The Weeknd", "popularity": 92},
-    {"id": "1mea3bSkSGXuIRvnydlB5b", "name": "Levitating", "artist": "Dua Lipa", "popularity": 88},
+    {"id": "5Z01UMMf7V1o0MzF86s6WJ", "name": "Someone You Loved", "artist": "Lewis Capaldi", "popularity": 88}, 
+    {"id": "1mea3bSkSGXuIRvnydlB5b", "name": "Levitating", "artist": "Dua Lipa", "popularity": 87},
     {"id": "4iV5W9uYEdYUVa79Axb7Rh", "name": "Watermelon Sugar", "artist": "Harry Styles", "popularity": 85},
-    {"id": "11dFghVXANMlKmJXsNCbNl", "name": "good 4 u", "artist": "Olivia Rodrigo", "popularity": 84},
-    {"id": "5HCyWlXZPP0y6Gqq8TgA20", "name": "Stay", "artist": "The Kid LAROI & Justin Bieber", "popularity": 82},
-    {"id": "1BxfuPKGuaTgP7aM0Bbdwr", "name": "Peaches", "artist": "Justin Bieber", "popularity": 80},
-    {"id": "6WrI0LAC5M1Rw2MnX2ZvEg", "name": "Don't Start Now", "artist": "Dua Lipa", "popularity": 78},
-    {"id": "463CkQjx2Zk1yXoBuierM9", "name": "Levitating (feat. DaBaby)", "artist": "Dua Lipa", "popularity": 75},
-    {"id": "3n3Ppam7vgaVa1iaRUc9Lp", "name": "Mr. Brightside", "artist": "The Killers", "popularity": 73}
+    {"id": "6WrI0LAC5M1Rw2MnX2ZvEg", "name": "Don't Start Now", "artist": "Dua Lipa", "popularity": 84},
+    {"id": "11dFghVXANMlKmJXsNCbNl", "name": "good 4 u", "artist": "Olivia Rodrigo", "popularity": 83},
+    {"id": "1BxfuPKGuaTgP7aM0Bbdwr", "name": "Peaches", "artist": "Justin Bieber ft. Daniel Caesar & Giveon", "popularity": 82},
+    {"id": "3n3Ppam7vgaVa1iaRUc9Lp", "name": "Mr. Brightside", "artist": "The Killers", "popularity": 80},
+    {"id": "0VjIjW4GlUZAMYd2vXMi3b", "name": "As It Was", "artist": "Harry Styles", "popularity": 89}
 ]
 
 class OptimizedRecommendationService:
@@ -174,12 +178,46 @@ class OptimizedRecommendationService:
         
         return recommendations
 
+# Add function to load real track data:
+def load_real_track_data():
+    """Load real track data dari dataset CSV"""
+    try:
+        tracks_path = "/app/data/raw/tracks.csv"
+        if os.path.exists(tracks_path):
+            # Load real tracks dengan real IDs
+            df = pd.read_csv(tracks_path)
+            
+            # Take top popular tracks dengan real data
+            real_songs = []
+            for _, row in df.head(10).iterrows():
+                real_songs.append({
+                    "id": row['id'],  # Real Spotify ID
+                    "name": row['name'],  # Real track name
+                    "artist": row.get('artists', 'Unknown Artist'),  # Real artist
+                    "popularity": row.get('popularity', 50)  # Real popularity
+                })
+            
+            logger.info(f"✅ Loaded {len(real_songs)} real tracks from dataset")
+            return real_songs
+        else:
+            logger.warning("⚠️ Dataset not found, using fallback data")
+            return SAMPLE_SONGS
+            
+    except Exception as e:
+        logger.error(f"❌ Error loading real tracks: {e}")
+        return SAMPLE_SONGS
+
+# Update initialization
 def initialize_service():
-    """Initialize service dengan graceful error handling"""
-    global rec_service, models_loaded, fallback_mode
+    """Initialize service dengan real track data"""
+    global rec_service, models_loaded, fallback_mode, SAMPLE_SONGS
     
     try:
         logger.info("🚀 Initializing OptimizedRecommendationService...")
+        
+        # Load real track data first
+        SAMPLE_SONGS = load_real_track_data()
+        
         rec_service = OptimizedRecommendationService()
         
         # Check if models loaded successfully
@@ -310,12 +348,229 @@ def get_content_recommendations(track_name):
         "model": "KMeans Content-Based" if models_loaded else "Similarity-Based"
     })
 
+@app.route('/streaming/status', methods=['GET'])
+def get_streaming_status():
+    """Get real-time streaming status"""
+    try:
+        # Check training service status
+        training_response = requests.get('http://training-service:8000/status', timeout=5)
+        training_status = training_response.json() if training_response.status_code == 200 else {}
+        
+        return jsonify({
+            "streaming": {
+                "active": True,
+                "batch_interval": "1 minute",
+                "next_training": "After next batch"
+            },
+            "training": training_status,
+            "last_updated": datetime.now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/recent', methods=['GET'])
+def get_recent_batches():
+    """Get recent batch information"""
+    try:
+        # In real implementation, query MinIO for recent batches
+        return jsonify({
+            "recent_batches": [
+                {"batch_id": "batch_000001", "size": 45, "timestamp": "2025-06-20T10:00:00Z"},
+                {"batch_id": "batch_000002", "size": 52, "timestamp": "2025-06-20T10:01:00Z"}
+            ],
+            "total_batches_today": 24,
+            "average_batch_size": 48
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/files', methods=['GET'])
+def get_batch_files():
+    """Get list of batch files dengan UI data"""
+    try:
+        batch_path = "/app/data/batches/raw"
+        
+        if not os.path.exists(batch_path):
+            return jsonify({"batch_files": [], "message": "Batch directory not found"})
+        
+        # List all batch files
+        batch_files = []
+        for filename in sorted(os.listdir(batch_path)):
+            if filename.endswith('.json'):
+                file_path = os.path.join(batch_path, filename)
+                file_stat = os.stat(file_path)
+                
+                try:
+                    with open(file_path, 'r') as f:
+                        batch_data = json.load(f)
+                    
+                    batch_files.append({
+                        "filename": filename,
+                        "batch_id": batch_data.get('batch_id', 'unknown'),
+                        "size": batch_data.get('size', 0),
+                        "timestamp": batch_data.get('timestamp'),
+                        "file_size": file_stat.st_size,
+                        "created": datetime.fromtimestamp(file_stat.st_ctime).isoformat(),
+                        "ui_summary": batch_data.get('ui_summary', {}),
+                        "training_summary": batch_data.get('training_summary', {})
+                    })
+                except Exception as e:
+                    logger.warning(f"Could not read batch file {filename}: {e}")
+        
+        return jsonify({
+            "batch_files": batch_files,
+            "total_files": len(batch_files),
+            "storage_path": batch_path
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/latest', methods=['GET'])
+def get_latest_batch():
+    """Get latest batch dengan UI data"""
+    try:
+        batch_path = "/app/data/batches/raw"
+        
+        if not os.path.exists(batch_path):
+            return jsonify({"error": "Batch directory not found"}), 404
+        
+        # Find latest batch file
+        batch_files = [f for f in os.listdir(batch_path) if f.endswith('.json')]
+        if not batch_files:
+            return jsonify({"error": "No batch files found"}), 404
+        
+        latest_file = sorted(batch_files)[-1]
+        latest_path = os.path.join(batch_path, latest_file)
+        
+        # Read latest batch
+        with open(latest_path, 'r') as f:
+            batch_data = json.load(f)
+        
+        return jsonify({
+            "latest_batch": batch_data,
+            "filename": latest_file,
+            "file_path": latest_path
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/featured', methods=['GET'])
+def get_featured_tracks():
+    """Get featured tracks dari latest batch untuk UI cards"""
+    try:
+        batch_path = "/app/data/batches/raw"
+        
+        if not os.path.exists(batch_path):
+            return jsonify({"featured_tracks": [], "message": "Batch directory not found"})
+        
+        batch_files = [f for f in os.listdir(batch_path) if f.endswith('.json')]
+        
+        if not batch_files:
+            return jsonify({"featured_tracks": [], "message": "No batch files found"})
+        
+        latest_file = sorted(batch_files)[-1]
+        latest_path = os.path.join(batch_path, latest_file)
+        
+        with open(latest_path, 'r') as f:
+            batch_data = json.load(f)
+        
+        featured_tracks = batch_data.get('ui_summary', {}).get('featured_tracks', [])
+        
+        return jsonify({
+            "featured_tracks": featured_tracks,
+            "batch_id": batch_data.get('batch_id'),
+            "timestamp": batch_data.get('timestamp'),
+            "total_interactions": batch_data.get('size', 0)
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/emotions', methods=['GET'])
+def get_emotion_distribution():
+    """Get emotion distribution dari latest batch"""
+    try:
+        batch_path = "/app/data/batches/raw"
+        batch_files = [f for f in os.listdir(batch_path) if f.endswith('.json')]
+        
+        if not batch_files:
+            return jsonify({"emotion_distribution": {}})
+        
+        latest_file = sorted(batch_files)[-1]
+        latest_path = os.path.join(batch_path, latest_file)
+        
+        with open(latest_path, 'r') as f:
+            batch_data = json.load(f)
+        
+        emotion_distribution = batch_data.get('ui_summary', {}).get('emotion_distribution', {})
+        
+        return jsonify({
+            "emotion_distribution": emotion_distribution,
+            "batch_id": batch_data.get('batch_id'),
+            "total_tracks": sum(emotion_distribution.values())
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/batches/stats', methods=['GET'])
+def get_batch_stats():
+    """Get overall batch statistics"""
+    try:
+        batch_path = "/app/data/batches/raw"
+        
+        if not os.path.exists(batch_path):
+            return jsonify({"error": "Batch directory not found"}), 404
+        
+        batch_files = [f for f in os.listdir(batch_path) if f.endswith('.json')]
+        
+        if not batch_files:
+            return jsonify({
+                "total_batches": 0,
+                "total_interactions": 0,
+                "avg_batch_size": 0,
+                "latest_batch_time": None
+            })
+        
+        total_interactions = 0
+        latest_timestamp = None
+        
+        # Process all batch files
+        for filename in batch_files:
+            file_path = os.path.join(batch_path, filename)
+            try:
+                with open(file_path, 'r') as f:
+                    batch_data = json.load(f)
+                
+                total_interactions += batch_data.get('size', 0)
+                
+                batch_time = batch_data.get('timestamp')
+                if batch_time and (not latest_timestamp or batch_time > latest_timestamp):
+                    latest_timestamp = batch_time
+                    
+            except Exception as e:
+                logger.warning(f"Could not process batch file {filename}: {e}")
+        
+        return jsonify({
+            "total_batches": len(batch_files),
+            "total_interactions": total_interactions,
+            "avg_batch_size": round(total_interactions / len(batch_files), 1) if batch_files else 0,
+            "latest_batch_time": latest_timestamp,
+            "storage_path": batch_path
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
-    # Initialize service before starting Flask
+    # Initialize service
     initialize_service()
     
-    logger.info("🚀 Starting Optimized Flask API...")
-    logger.info(f"📊 Service mode: {'Model' if models_loaded else 'Fallback'}")
+    # Start Flask app
+    logger.info("🚀 Starting Optimized Music Recommendation API...")
+    logger.info("📍 API will be available at: http://localhost:5000")
+    logger.info("🔧 Health check: http://localhost:5000/health")
     
-    # Start Flask
-    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)

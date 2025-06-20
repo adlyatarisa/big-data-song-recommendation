@@ -1,0 +1,913 @@
+{
+  "batch_id": "batch_000003_1750428511",
+  "timestamp": "2025-06-20T14:08:31.423263",
+  "size": 23,
+  "interactions": [
+    {
+      "user_id": 393,
+      "track_id": "6xNwKNYZcvgV3XTIwsgNio",
+      "rating": 3.16,
+      "action": "play",
+      "play_duration_ms": 104192,
+      "timestamp": "2025-06-20T14:07:34.477888",
+      "track_display": {
+        "name": "Heartbreak Hotel",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=436",
+        "external_url": "https://open.spotify.com/track/6xNwKNYZcvgV3XTIwsgNio",
+        "emotion": "calm",
+        "popularity": 65.0,
+        "duration_ms": 127560.0
+      },
+      "audio_features": {
+        "acousticness": 0.84,
+        "danceability": 0.696,
+        "energy": 0.21,
+        "valence": 0.717,
+        "tempo": 93.543,
+        "loudness": -11.922,
+        "speechiness": 0.067,
+        "instrumentalness": 1.62e-06,
+        "liveness": 0.107,
+        "key": 4.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 42,
+      "track_id": "6zduzbKbvnWZKZpp0o3xGX",
+      "rating": 2.3,
+      "action": "replay",
+      "play_duration_ms": 246986.0,
+      "timestamp": "2025-06-20T14:07:37.479608",
+      "track_display": {
+        "name": "Mi Sed",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=22",
+        "external_url": "https://open.spotify.com/track/6zduzbKbvnWZKZpp0o3xGX",
+        "emotion": "neutral",
+        "popularity": 21.0,
+        "duration_ms": 149540.0
+      },
+      "audio_features": {
+        "acousticness": 0.303,
+        "danceability": 0.624,
+        "energy": 0.624,
+        "valence": 0.666,
+        "tempo": 94.869,
+        "loudness": -7.175,
+        "speechiness": 0.0714,
+        "instrumentalness": 0.0,
+        "liveness": 0.357,
+        "key": 6.0,
+        "mode": 0.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "work",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 8,
+      "track_id": "3VC3fi0Iz3cV1dtsDLwoII",
+      "rating": 2.33,
+      "action": "skip",
+      "play_duration_ms": 5755,
+      "timestamp": "2025-06-20T14:07:40.983784",
+      "track_display": {
+        "name": "Massenet: Manon, Act 3 Tableau 1 Scene 4: \"Ob\u00e9issons, quand leur voix appelle \u2026 Profitons bien de la jeunesse\" (Manon, Br\u00e9tigny, Chorus) - Gavotte",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=918",
+        "external_url": "https://open.spotify.com/track/3VC3fi0Iz3cV1dtsDLwoII",
+        "emotion": "sadness",
+        "popularity": 32.0,
+        "duration_ms": 189760.0
+      },
+      "audio_features": {
+        "acousticness": 0.973,
+        "danceability": 0.296,
+        "energy": 0.0627,
+        "valence": 0.067,
+        "tempo": 175.841,
+        "loudness": -20.764,
+        "speechiness": 0.0994,
+        "instrumentalness": 3.12e-05,
+        "liveness": 0.757,
+        "key": 7.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 304,
+      "track_id": "53jLJDQk8rk5GAHXDd0MrW",
+      "rating": 2.46,
+      "action": "replay",
+      "play_duration_ms": 361823.0,
+      "timestamp": "2025-06-20T14:07:42.445887",
+      "track_display": {
+        "name": "El No Lo Mat\u00f3",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=737",
+        "external_url": "https://open.spotify.com/track/53jLJDQk8rk5GAHXDd0MrW",
+        "emotion": "neutral",
+        "popularity": 46.0,
+        "duration_ms": 252958.0
+      },
+      "audio_features": {
+        "acousticness": 0.016,
+        "danceability": 0.565,
+        "energy": 0.756,
+        "valence": 0.688,
+        "tempo": 136.442,
+        "loudness": -9.286,
+        "speechiness": 0.0384,
+        "instrumentalness": 0.0,
+        "liveness": 0.099,
+        "key": 6.0,
+        "mode": 0.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "home",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 408,
+      "track_id": "73OJuRKSX7XcXOPXeDB9mh",
+      "rating": 2.5,
+      "action": "skip",
+      "play_duration_ms": 6992,
+      "timestamp": "2025-06-20T14:07:45.521962",
+      "track_display": {
+        "name": "Change Up (feat. Desperado)",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=258",
+        "external_url": "https://open.spotify.com/track/73OJuRKSX7XcXOPXeDB9mh",
+        "emotion": "neutral",
+        "popularity": 43.0,
+        "duration_ms": 203713.0
+      },
+      "audio_features": {
+        "acousticness": 0.0116,
+        "danceability": 0.801,
+        "energy": 0.666,
+        "valence": 0.139,
+        "tempo": 87.974,
+        "loudness": -7.148,
+        "speechiness": 0.227,
+        "instrumentalness": 1.41e-06,
+        "liveness": 0.124,
+        "key": 1.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "work",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 494,
+      "track_id": "3GJOFAn3P5ppLJmylr3Wj6",
+      "rating": 2.93,
+      "action": "skip",
+      "play_duration_ms": 7393,
+      "timestamp": "2025-06-20T14:07:47.926011",
+      "track_display": {
+        "name": "De Chapeu de Sol Aberto / Juventude Dourada / Cala Boca Menino / Oh Bella - Original Mix",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=642",
+        "external_url": "https://open.spotify.com/track/3GJOFAn3P5ppLJmylr3Wj6",
+        "emotion": "neutral",
+        "popularity": 37.0,
+        "duration_ms": 246493.0
+      },
+      "audio_features": {
+        "acousticness": 0.0914,
+        "danceability": 0.555,
+        "energy": 0.894,
+        "valence": 0.591,
+        "tempo": 109.707,
+        "loudness": -4.04,
+        "speechiness": 0.0864,
+        "instrumentalness": 1.41e-05,
+        "liveness": 0.69,
+        "key": 2.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 466,
+      "track_id": "0cdCBqWbgvtRu7e5IMkoNd",
+      "rating": 3.0,
+      "action": "skip",
+      "play_duration_ms": 22016,
+      "timestamp": "2025-06-20T14:07:50.584064",
+      "track_display": {
+        "name": "Despu\u00e9s De Ti",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=642",
+        "external_url": "https://open.spotify.com/track/0cdCBqWbgvtRu7e5IMkoNd",
+        "emotion": "neutral",
+        "popularity": 40.0,
+        "duration_ms": 81813.0
+      },
+      "audio_features": {
+        "acousticness": 0.671,
+        "danceability": 0.385,
+        "energy": 0.905,
+        "valence": 0.618,
+        "tempo": 91.714,
+        "loudness": -5.945,
+        "speechiness": 0.0936,
+        "instrumentalness": 0.00263,
+        "liveness": 0.544,
+        "key": 0.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 335,
+      "track_id": "14MR12RkIvXHeqgaJI0ngI",
+      "rating": 4.03,
+      "action": "like",
+      "play_duration_ms": 40688,
+      "timestamp": "2025-06-20T14:07:54.366802",
+      "track_display": {
+        "name": "Two",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=991",
+        "external_url": "https://open.spotify.com/track/14MR12RkIvXHeqgaJI0ngI",
+        "emotion": "sadness",
+        "popularity": 69.0,
+        "duration_ms": 188732.0
+      },
+      "audio_features": {
+        "acousticness": 0.933,
+        "danceability": 0.166,
+        "energy": 0.0826,
+        "valence": 0.036,
+        "tempo": 110.304,
+        "loudness": -25.741,
+        "speechiness": 0.0359,
+        "instrumentalness": 0.882,
+        "liveness": 0.119,
+        "key": 0.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "work",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 459,
+      "track_id": "4ABdTWafMCXfATpILRuZFW",
+      "rating": 4.08,
+      "action": "like",
+      "play_duration_ms": 76501,
+      "timestamp": "2025-06-20T14:07:56.463002",
+      "track_display": {
+        "name": "IDWK",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=132",
+        "external_url": "https://open.spotify.com/track/4ABdTWafMCXfATpILRuZFW",
+        "emotion": "neutral",
+        "popularity": 69.0,
+        "duration_ms": 179999.0
+      },
+      "audio_features": {
+        "acousticness": 0.00271,
+        "danceability": 0.717,
+        "energy": 0.847,
+        "valence": 0.414,
+        "tempo": 114.996,
+        "loudness": -6.159,
+        "speechiness": 0.0353,
+        "instrumentalness": 1.04e-06,
+        "liveness": 0.11,
+        "key": 1.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "home",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 233,
+      "track_id": "6g8QGdbr7CX9N76xh7lTJW",
+      "rating": 1.27,
+      "action": "like",
+      "play_duration_ms": 32117,
+      "timestamp": "2025-06-20T14:07:58.431230",
+      "track_display": {
+        "name": "I Like to See it Lap the Miles",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=859",
+        "external_url": "https://open.spotify.com/track/6g8QGdbr7CX9N76xh7lTJW",
+        "emotion": "excitement",
+        "popularity": 2.0,
+        "duration_ms": 42000.0
+      },
+      "audio_features": {
+        "acousticness": 0.713,
+        "danceability": 0.716,
+        "energy": 0.231,
+        "valence": 0.674,
+        "tempo": 124.862,
+        "loudness": -22.724,
+        "speechiness": 0.887,
+        "instrumentalness": 0.0,
+        "liveness": 0.389,
+        "key": 11.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "commute",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 363,
+      "track_id": "3CMlAaKO8Z1MUsmk5ngUtN",
+      "rating": 2.9,
+      "action": "play",
+      "play_duration_ms": 206287,
+      "timestamp": "2025-06-20T14:08:00.665707",
+      "track_display": {
+        "name": "The John Wayne",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=458",
+        "external_url": "https://open.spotify.com/track/3CMlAaKO8Z1MUsmk5ngUtN",
+        "emotion": "neutral",
+        "popularity": 50.0,
+        "duration_ms": 291920.0
+      },
+      "audio_features": {
+        "acousticness": 0.0246,
+        "danceability": 0.304,
+        "energy": 0.591,
+        "valence": 0.18,
+        "tempo": 142.921,
+        "loudness": -5.498,
+        "speechiness": 0.0323,
+        "instrumentalness": 1.63e-06,
+        "liveness": 0.08,
+        "key": 6.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "commute",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 443,
+      "track_id": "7IpwWADvJEu2HerDvNtYO4",
+      "rating": 1.4,
+      "action": "replay",
+      "play_duration_ms": 259226.0,
+      "timestamp": "2025-06-20T14:08:02.487495",
+      "track_display": {
+        "name": "Hear Me - Zaydro Remix",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=713",
+        "external_url": "https://open.spotify.com/track/7IpwWADvJEu2HerDvNtYO4",
+        "emotion": "neutral",
+        "popularity": 3.0,
+        "duration_ms": 196364.0
+      },
+      "audio_features": {
+        "acousticness": 0.00161,
+        "danceability": 0.704,
+        "energy": 0.944,
+        "valence": 0.522,
+        "tempo": 110.033,
+        "loudness": -1.977,
+        "speechiness": 0.0548,
+        "instrumentalness": 0.0012,
+        "liveness": 0.148,
+        "key": 7.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 474,
+      "track_id": "5nASGGi1QarKyMmGg2fhaB",
+      "rating": 3.22,
+      "action": "play",
+      "play_duration_ms": 59720,
+      "timestamp": "2025-06-20T14:08:05.609140",
+      "track_display": {
+        "name": "Pynk (feat. Grimes)",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=111",
+        "external_url": "https://open.spotify.com/track/5nASGGi1QarKyMmGg2fhaB",
+        "emotion": "neutral",
+        "popularity": 45.0,
+        "duration_ms": 240426.0
+      },
+      "audio_features": {
+        "acousticness": 0.0375,
+        "danceability": 0.672,
+        "energy": 0.291,
+        "valence": 0.417,
+        "tempo": 100.961,
+        "loudness": -7.843,
+        "speechiness": 0.0897,
+        "instrumentalness": 3.89e-06,
+        "liveness": 0.0925,
+        "key": 8.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "desktop",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 479,
+      "track_id": "6RjnBLAqjop8cgSsPrUlCs",
+      "rating": 2.14,
+      "action": "replay",
+      "play_duration_ms": 286816.0,
+      "timestamp": "2025-06-20T14:08:09.244829",
+      "track_display": {
+        "name": "Shake It",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=471",
+        "external_url": "https://open.spotify.com/track/6RjnBLAqjop8cgSsPrUlCs",
+        "emotion": "anger",
+        "popularity": 31.0,
+        "duration_ms": 222533.0
+      },
+      "audio_features": {
+        "acousticness": 0.00274,
+        "danceability": 0.449,
+        "energy": 0.811,
+        "valence": 0.274,
+        "tempo": 78.996,
+        "loudness": -5.938,
+        "speechiness": 0.0786,
+        "instrumentalness": 4.03e-05,
+        "liveness": 0.126,
+        "key": 9.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 351,
+      "track_id": "2ZWOEMmcN5aerFmasiewTF",
+      "rating": 3.34,
+      "action": "play",
+      "play_duration_ms": 208336,
+      "timestamp": "2025-06-20T14:08:13.012290",
+      "track_display": {
+        "name": "Estoy Perdido",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=541",
+        "external_url": "https://open.spotify.com/track/2ZWOEMmcN5aerFmasiewTF",
+        "emotion": "excitement",
+        "popularity": 53.0,
+        "duration_ms": 250107.0
+      },
+      "audio_features": {
+        "acousticness": 0.579,
+        "danceability": 0.873,
+        "energy": 0.626,
+        "valence": 0.97,
+        "tempo": 140.037,
+        "loudness": -5.995,
+        "speechiness": 0.0397,
+        "instrumentalness": 7.64e-06,
+        "liveness": 0.0738,
+        "key": 1.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 490,
+      "track_id": "4z5fkIflIBvSG9elVNmiOJ",
+      "rating": 3.28,
+      "action": "skip",
+      "play_duration_ms": 19854,
+      "timestamp": "2025-06-20T14:08:14.698863",
+      "track_display": {
+        "name": "We Run This - Without Manicure Interlude",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=528",
+        "external_url": "https://open.spotify.com/track/4z5fkIflIBvSG9elVNmiOJ",
+        "emotion": "joy",
+        "popularity": 45.0,
+        "duration_ms": 204461.0
+      },
+      "audio_features": {
+        "acousticness": 0.187,
+        "danceability": 0.745,
+        "energy": 0.898,
+        "valence": 0.778,
+        "tempo": 109.614,
+        "loudness": -4.544,
+        "speechiness": 0.234,
+        "instrumentalness": 0.0,
+        "liveness": 0.712,
+        "key": 9.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 447,
+      "track_id": "35cbjoB29mxVsLGJ72M24E",
+      "rating": 2.3,
+      "action": "play",
+      "play_duration_ms": 172279,
+      "timestamp": "2025-06-20T14:08:16.720836",
+      "track_display": {
+        "name": "Lonely Without You - Lounge Mix",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=717",
+        "external_url": "https://open.spotify.com/track/35cbjoB29mxVsLGJ72M24E",
+        "emotion": "neutral",
+        "popularity": 44.0,
+        "duration_ms": 242045.0
+      },
+      "audio_features": {
+        "acousticness": 0.00768,
+        "danceability": 0.665,
+        "energy": 0.78,
+        "valence": 0.354,
+        "tempo": 176.008,
+        "loudness": -8.829,
+        "speechiness": 0.056,
+        "instrumentalness": 0.845,
+        "liveness": 0.272,
+        "key": 2.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "home",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 15,
+      "track_id": "1iNo2YQFdiqdzPfMtMkda1",
+      "rating": 3.38,
+      "action": "skip",
+      "play_duration_ms": 13412,
+      "timestamp": "2025-06-20T14:08:18.890186",
+      "track_display": {
+        "name": "In My Arms",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=315",
+        "external_url": "https://open.spotify.com/track/1iNo2YQFdiqdzPfMtMkda1",
+        "emotion": "neutral",
+        "popularity": 52.0,
+        "duration_ms": 162609.0
+      },
+      "audio_features": {
+        "acousticness": 0.995,
+        "danceability": 0.727,
+        "energy": 0.00695,
+        "valence": 0.473,
+        "tempo": 69.038,
+        "loudness": -29.923,
+        "speechiness": 0.0986,
+        "instrumentalness": 0.966,
+        "liveness": 0.115,
+        "key": 1.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "gym",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 45,
+      "track_id": "4iZPNYqzI2L0uwuUKun7Aa",
+      "rating": 1.68,
+      "action": "replay",
+      "play_duration_ms": 267853.0,
+      "timestamp": "2025-06-20T14:08:22.142242",
+      "track_display": {
+        "name": "Stole the Show",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=167",
+        "external_url": "https://open.spotify.com/track/4iZPNYqzI2L0uwuUKun7Aa",
+        "emotion": "neutral",
+        "popularity": 25.0,
+        "duration_ms": 222801.0
+      },
+      "audio_features": {
+        "acousticness": 0.155,
+        "danceability": 0.679,
+        "energy": 0.662,
+        "valence": 0.438,
+        "tempo": 99.879,
+        "loudness": -6.069,
+        "speechiness": 0.174,
+        "instrumentalness": 0.0,
+        "liveness": 0.152,
+        "key": 8.0,
+        "mode": 0.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "commute",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 410,
+      "track_id": "5wFE44nNM63xwDk02IcIVT",
+      "rating": 3.39,
+      "action": "replay",
+      "play_duration_ms": 432840.0,
+      "timestamp": "2025-06-20T14:08:23.982048",
+      "track_display": {
+        "name": "Police In Helicopter - Benny L Remix",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=390",
+        "external_url": "https://open.spotify.com/track/5wFE44nNM63xwDk02IcIVT",
+        "emotion": "anger",
+        "popularity": 53.0,
+        "duration_ms": 266654.0
+      },
+      "audio_features": {
+        "acousticness": 0.0043,
+        "danceability": 0.734,
+        "energy": 0.804,
+        "valence": 0.191,
+        "tempo": 87.516,
+        "loudness": -3.056,
+        "speechiness": 0.0642,
+        "instrumentalness": 0.000804,
+        "liveness": 0.0766,
+        "key": 2.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "work",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 43,
+      "track_id": "24NU7qT0bvRRCAqE0QFVZ0",
+      "rating": 3.35,
+      "action": "like",
+      "play_duration_ms": 232743,
+      "timestamp": "2025-06-20T14:08:27.446415",
+      "track_display": {
+        "name": "Let 'em Burn",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=817",
+        "external_url": "https://open.spotify.com/track/24NU7qT0bvRRCAqE0QFVZ0",
+        "emotion": "neutral",
+        "popularity": 51.0,
+        "duration_ms": 235853.0
+      },
+      "audio_features": {
+        "acousticness": 0.000122,
+        "danceability": 0.54,
+        "energy": 0.966,
+        "valence": 0.521,
+        "tempo": 94.986,
+        "loudness": -3.884,
+        "speechiness": 0.0637,
+        "instrumentalness": 0.000626,
+        "liveness": 0.391,
+        "key": 10.0,
+        "mode": 0.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "work",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 464,
+      "track_id": "3CAuQjMgfYJrqSehDwP0nl",
+      "rating": 2.33,
+      "action": "skip",
+      "play_duration_ms": 7160,
+      "timestamp": "2025-06-20T14:08:29.770960",
+      "track_display": {
+        "name": "Elizabeth Colour Wheel",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=295",
+        "external_url": "https://open.spotify.com/track/3CAuQjMgfYJrqSehDwP0nl",
+        "emotion": "neutral",
+        "popularity": 31.0,
+        "duration_ms": 418867.0
+      },
+      "audio_features": {
+        "acousticness": 0.000293,
+        "danceability": 0.334,
+        "energy": 0.494,
+        "valence": 0.068,
+        "tempo": 155.154,
+        "loudness": -10.229,
+        "speechiness": 0.0372,
+        "instrumentalness": 0.962,
+        "liveness": 0.0537,
+        "key": 4.0,
+        "mode": 1.0
+      },
+      "context": {
+        "device": "mobile",
+        "location": "home",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    },
+    {
+      "user_id": 414,
+      "track_id": "4takaPhcyWG99czAcbNgRD",
+      "rating": 2.55,
+      "action": "skip",
+      "play_duration_ms": 15948,
+      "timestamp": "2025-06-20T14:08:31.059351",
+      "track_display": {
+        "name": "\u0627\u0644\u0627\u062d\u0628\u0627\u0628",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=664",
+        "external_url": "https://open.spotify.com/track/4takaPhcyWG99czAcbNgRD",
+        "emotion": "excitement",
+        "popularity": 33.0,
+        "duration_ms": 179566.0
+      },
+      "audio_features": {
+        "acousticness": 0.565,
+        "danceability": 0.793,
+        "energy": 0.593,
+        "valence": 0.94,
+        "tempo": 89.756,
+        "loudness": -5.11,
+        "speechiness": 0.0592,
+        "instrumentalness": 0.0,
+        "liveness": 0.192,
+        "key": 5.0,
+        "mode": 0.0
+      },
+      "context": {
+        "device": "tablet",
+        "location": "home",
+        "time_of_day": 14,
+        "day_of_week": 4
+      }
+    }
+  ],
+  "ui_summary": {
+    "featured_tracks": [
+      {
+        "name": "IDWK",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=132",
+        "external_url": "https://open.spotify.com/track/4ABdTWafMCXfATpILRuZFW",
+        "emotion": "neutral",
+        "popularity": 69.0,
+        "duration_ms": 179999.0
+      },
+      {
+        "name": "Two",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=991",
+        "external_url": "https://open.spotify.com/track/14MR12RkIvXHeqgaJI0ngI",
+        "emotion": "sadness",
+        "popularity": 69.0,
+        "duration_ms": 188732.0
+      },
+      {
+        "name": "Police In Helicopter - Benny L Remix",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=390",
+        "external_url": "https://open.spotify.com/track/5wFE44nNM63xwDk02IcIVT",
+        "emotion": "anger",
+        "popularity": 53.0,
+        "duration_ms": 266654.0
+      },
+      {
+        "name": "In My Arms",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=315",
+        "external_url": "https://open.spotify.com/track/1iNo2YQFdiqdzPfMtMkda1",
+        "emotion": "neutral",
+        "popularity": 52.0,
+        "duration_ms": 162609.0
+      },
+      {
+        "name": "Let 'em Burn",
+        "artist_name": "Unknown Artist",
+        "image_url": "https://picsum.photos/300/300?random=817",
+        "external_url": "https://open.spotify.com/track/24NU7qT0bvRRCAqE0QFVZ0",
+        "emotion": "neutral",
+        "popularity": 51.0,
+        "duration_ms": 235853.0
+      }
+    ],
+    "emotion_distribution": {
+      "excitement": 3,
+      "anger": 2,
+      "neutral": 14,
+      "calm": 1,
+      "sadness": 2,
+      "joy": 1
+    },
+    "avg_rating": 2.75,
+    "popular_artists": [
+      {
+        "artist": "Unknown Artist",
+        "interactions": 23
+      }
+    ]
+  },
+  "training_summary": {
+    "unique_users": 23,
+    "unique_tracks": 23,
+    "action_distribution": {
+      "play": 5,
+      "like": 4,
+      "skip": 8,
+      "replay": 6
+    },
+    "has_audio_features": true,
+    "has_ui_data": true,
+    "ready_for_training": true,
+    "ready_for_display": true
+  }
+}

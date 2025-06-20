@@ -49,35 +49,35 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: streaming-service
+    volumes:
+      - ../data:/app/data
+    command: python src/streaming_service.py
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       - kafka
       - minio
-    environment:
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
-      - MINIO_ENDPOINT=minio:9000
-    volumes:
-      - ../data:/app/data
-    command: python src/run_streaming.py
+    restart: unless-stopped
 
-  # ML Training Service
+  # Auto-Retraining Service  
   training-service:
     build: 
       context: ..
       dockerfile: docker/Dockerfile
     container_name: training-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../data:/app/data
+    command: python src/training_service.py
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       - kafka
       - minio
-      - streaming-service
-    environment:
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
-      - MINIO_ENDPOINT=minio:9000
-      - SPARK_LOCAL_IP=127.0.0.1
-    volumes:
-      - ../data:/app/data
-    command: python src/train_models.py
+    restart: unless-stopped
 
-  # API Service
+  # Updated API Service
   api-service:
     build: 
       context: ..
@@ -87,16 +87,18 @@ services:
       - "5000:5000"
     volumes:
       - ../data:/app/data
-    command: python src/app_optimized.py  # ← Use optimized version
+    command: python src/app_optimized.py
     environment:
       - PYTHONUNBUFFERED=1
       - SPARK_LOCAL_DIRS=/tmp/spark
+    depends_on:
+      - streaming-service
+      - training-service
     deploy:
       resources:
         limits:
           memory: 2G
-        reservations:
-          memory: 1G
+    restart: unless-stopped
 
   # Streamlit Dashboard
   dashboard:

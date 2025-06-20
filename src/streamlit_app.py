@@ -5,6 +5,8 @@ import os
 import json
 import hashlib
 from datetime import datetime
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="🎵 MusicBot - Personal Music Discovery",
@@ -242,7 +244,9 @@ else:
         "🎭 Genres",
         "😊 Moods",
         "❤️ My Music",
-        "🎯 Discover"
+        "🎯 Discover",
+        "🔄 Real-Time Batches",
+        "📊 Batch History"
     ])
     
     # User stats
@@ -520,3 +524,153 @@ else:
                 else:
                     st.success(f"🎵 Discovering music using: {discovery_type}")
                     st.info("💡 This feature will be enhanced with more discovery algorithms!")
+    
+    elif page == "🔄 Real-Time Batches":
+        """Show real-time batch monitoring dashboard"""
+        st.title("🔄 Real-Time Batch Monitoring")
+        
+        # Auto-refresh every 30 seconds
+        if st.button("🔄 Refresh Data"):
+            st.rerun()
+        
+        try:
+            # Get latest batch data
+            response = requests.get(f"{API_URL}/batches/latest", timeout=10)
+            if response.status_code == 200:
+                batch_data = response.json()
+                latest_batch = batch_data['latest_batch']
+                
+                # Show batch info
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    st.metric("Batch ID", latest_batch['batch_id'])
+                with col2:
+                    st.metric("Interactions", latest_batch['size'])
+                with col3:
+                    st.metric("Unique Users", latest_batch['training_summary']['unique_users'])
+                with col4:
+                    st.metric("Avg Rating", f"{latest_batch['ui_summary']['avg_rating']:.2f}")
+                
+                # Featured Tracks Cards
+                st.subheader("🎵 Featured Tracks dari Latest Batch")
+                
+                featured_tracks = latest_batch['ui_summary']['featured_tracks']
+                
+                # Create columns for track cards
+                cols = st.columns(min(len(featured_tracks), 4))
+                
+                for i, track in enumerate(featured_tracks[:4]):
+                    with cols[i]:
+                        # Create track card
+                        st.image(track['image_url'], width=200)
+                        st.markdown(f"**{track['name']}**")
+                        st.markdown(f"*{track['artist_name']}*")
+                        st.markdown(f"😊 {track['emotion']}")
+                        st.markdown(f"⭐ {track['popularity']}/100")
+                        
+                        # Clickable link to Spotify
+                        st.markdown(f"[🎵 Play on Spotify]({track['external_url']})")
+                
+                # Emotion Distribution Chart
+                st.subheader("😊 Emotion Distribution")
+                
+                emotion_data = latest_batch['ui_summary']['emotion_distribution']
+                if emotion_data:
+                    # Create pie chart
+                    fig = px.pie(
+                        values=list(emotion_data.values()),
+                        names=list(emotion_data.keys()),
+                        title="Distribution of Track Emotions",
+                        color_discrete_sequence=px.colors.qualitative.Set3
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                # Action Distribution
+                st.subheader("🎯 User Actions")
+                
+                action_data = latest_batch['training_summary']['action_distribution']
+                if action_data:
+                    fig = px.bar(
+                        x=list(action_data.keys()),
+                        y=list(action_data.values()),
+                        title="User Action Distribution",
+                        color=list(action_data.values()),
+                        color_continuous_scale="viridis"
+                    )
+                    fig.update_layout(showlegend=False)
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                # Popular Artists
+                st.subheader("🎤 Popular Artists")
+                
+                popular_artists = latest_batch['ui_summary']['popular_artists']
+                if popular_artists:
+                    artist_df = pd.DataFrame(popular_artists)
+                    
+                    fig = px.bar(
+                        artist_df,
+                        x='artist',
+                        y='interactions',
+                        title="Most Popular Artists in Latest Batch",
+                        color='interactions',
+                        color_continuous_scale="blues"
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                # Raw batch data (expandable)
+                with st.expander("🔍 View Raw Batch Data"):
+                    st.json(latest_batch)
+                    
+            else:
+                st.error("❌ Could not fetch batch data")
+                
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
+
+    elif page == "📊 Batch History":
+        st.title("📊 Batch History & Trends")
+        
+        try:
+            # Get all batch files
+            response = requests.get(f"{API_URL}/batches/files", timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                batch_files = data['batch_files']
+                
+                if batch_files:
+                    # Convert to DataFrame untuk analysis
+                    df = pd.DataFrame(batch_files)
+                    df['timestamp'] = pd.to_datetime(df['timestamp'])
+                    
+                    # Batch size over time
+                    st.subheader("📈 Batch Size Trends")
+                    fig = px.line(
+                        df,
+                        x='timestamp',
+                        y='size',
+                        title="Batch Size Over Time",
+                        markers=True
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+                    
+                    # Summary statistics
+                    col1, col2, col3 = st.columns(3)
+                    
+                    with col1:
+                        st.metric("Total Batches", len(batch_files))
+                    with col2:
+                        st.metric("Avg Batch Size", f"{df['size'].mean():.1f}")
+                    with col3:
+                        st.metric("Total Interactions", df['size'].sum())
+                    
+                    # Batch files table
+                    st.subheader("📋 All Batch Files")
+                    display_df = df[['batch_id', 'size', 'timestamp']].copy()
+                    display_df['timestamp'] = display_df['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
+                    st.dataframe(display_df, use_container_width=True)
+                else:
+                    st.info("📝 No batch files found yet")
+                    
+        except Exception as e:
+            st.error(f"❌ Error: {e}")

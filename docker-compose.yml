@@ -1,0 +1,91 @@
+services:
+  # Infrastructure
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - recommendation-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - recommendation-network
+
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: server /data --console-address ":9001"
+    networks:
+      - recommendation-network
+
+  # Core Services
+  streaming-service:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: python src/streaming_service.py
+    networks:
+      - recommendation-network
+    depends_on:
+      - kafka
+      - minio
+
+  api-service:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: python src/app_optimized.py
+    networks:
+      - recommendation-network
+    depends_on:
+      - streaming-service
+
+  training-service:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: python src/training_service.py
+    networks:
+      - recommendation-network
+    depends_on:
+      - streaming-service
+
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: streamlit run src/streamlit_app.py --server.address 0.0.0.0
+    networks:
+      - recommendation-network
+    depends_on:
+      - api-service
+
+networks:
+  recommendation-network:
+    driver: bridge
