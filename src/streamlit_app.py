@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(
-    page_title="🎵 MusicBot - Personal Music Discovery",
+    page_title="MusicBot - Personal Music Discovery",
     page_icon="🎵",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -60,6 +60,7 @@ st.markdown("""
     }
     .login-container {
         background: white;
+        color: #31333F;
         padding: 3rem;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -135,10 +136,10 @@ if not st.session_state.logged_in:
     # Login/Register Section
     st.markdown('<div class="login-container">', unsafe_allow_html=True)
     
-    tab1, tab2 = st.tabs(["🔐 Login", "📝 Register"])
+    tab1, tab2 = st.tabs(["Login", "Register"])
     
     with tab1:
-        st.subheader("Welcome Back! 👋")
+        st.subheader("Welcome Back! ")
         
         login_username = st.text_input("Username:", placeholder="Enter your username", key="login_user")
         login_password = st.text_input("Password:", type="password", placeholder="Enter your password", key="login_pass")
@@ -160,7 +161,7 @@ if not st.session_state.logged_in:
                     st.session_state.liked_songs = preferences.get('liked_songs', [])
                     st.session_state.user_preferences = preferences
                     
-                    st.success(f"✅ Welcome back, {login_username}!")
+                    st.success(f"Welcome back, {login_username}!")
                     st.balloons()
                     st.rerun()
                 else:
@@ -173,7 +174,7 @@ if not st.session_state.logged_in:
                 st.session_state.username = demo_username
                 st.session_state.user_id = generate_user_id(demo_username)
                 st.session_state.liked_songs = []
-                st.success(f"✅ Demo login as {demo_username}")
+                st.success(f"Demo login as {demo_username}")
                 st.rerun()
     
     with tab2:
@@ -190,7 +191,7 @@ if not st.session_state.logged_in:
             ["Pop", "Rock", "Hip Hop", "Jazz", "Classical", "Electronic", "Country", "R&B", "Reggae", "Blues"]
         )
         
-        if st.button("📝 Create Account", use_container_width=True):
+        if st.button("Create Account", use_container_width=True):
             if reg_username and reg_password:
                 user_id = generate_user_id(reg_username)
                 
@@ -212,7 +213,7 @@ if not st.session_state.logged_in:
                     st.session_state.liked_songs = []
                     st.session_state.user_preferences = preferences
                     
-                    st.success(f"🎉 Account created! Welcome {reg_username}!")
+                    st.success(f"Account created! Welcome {reg_username}!")
                     st.balloons()
                     st.rerun()
                 else:
@@ -226,36 +227,36 @@ else:
     # LOGGED IN USER INTERFACE
     
     # Sidebar
-    st.sidebar.markdown(f'<div class="user-card"><h3>👋 {st.session_state.username}</h3><p>User ID: {st.session_state.user_id}</p></div>', unsafe_allow_html=True)
+    st.sidebar.markdown(f'<div class="user-card"><h3>{st.session_state.username}</h3><p>User ID: {st.session_state.user_id}</p></div>', unsafe_allow_html=True)
     
     # API Status
     if api_connected:
-        st.sidebar.success("✅ Music Engine Online")
+        st.sidebar.success("Music Engine Online")
         if api_data:
-            st.sidebar.info(f"🎵 {api_data.get('metadata', {}).get('total_records', 'N/A')} songs available")
+            st.sidebar.info(f"{api_data.get('metadata', {}).get('total_records', 'N/A')} songs available")
     else:
-        st.sidebar.error("❌ Music Engine Offline")
+        st.sidebar.error("Music Engine Offline")
         st.sidebar.warning("Some features may not work")
     
     # Navigation
-    page = st.sidebar.selectbox("🎵 Navigate", [
-        "🏠 Home",
-        "🎼 Browse Songs", 
-        "🎭 Genres",
-        "😊 Moods",
-        "❤️ My Music",
-        "🎯 Discover",
-        "🔄 Real-Time Batches",
-        "📊 Batch History"
+    page = st.sidebar.selectbox("Navigate", [
+        "Home",
+        "Browse Songs", 
+        "Genres",
+        "Moods",
+        "My Music",
+        "Discover",
+        "Real-Time Batches",
+        "Batch History"
     ])
     
     # User stats
     st.sidebar.markdown("---")
-    st.sidebar.metric("❤️ Liked Songs", len(st.session_state.liked_songs))
-    st.sidebar.metric("🎭 Preferred Genres", len(st.session_state.user_preferences.get('preferred_genres', [])))
+    st.sidebar.metric("Liked Songs", len(st.session_state.liked_songs))
+    st.sidebar.metric("Preferred Genres", len(st.session_state.user_preferences.get('preferred_genres', [])))
     
     # Logout
-    if st.sidebar.button("🚪 Logout"):
+    if st.sidebar.button("Logout"):
         # Save user data before logout
         save_user_preferences(st.session_state.user_id, {
             **st.session_state.user_preferences,
@@ -272,47 +273,47 @@ else:
         st.rerun()
 
     # PAGE CONTENT
-    if page == "🏠 Home":
-        st.header(f"🏠 Welcome back, {st.session_state.username}!")
+    if page == "Home":
+        st.header(f"Welcome back, {st.session_state.username}!")
         
         # User dashboard
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("🎵 Songs Liked", len(st.session_state.liked_songs))
+            st.metric("Songs Liked", len(st.session_state.liked_songs))
         with col2:
-            st.metric("🆔 Your User ID", st.session_state.user_id)
+            st.metric("Your User ID", st.session_state.user_id)
         with col3:
-            st.metric("🎭 Preferred Genres", len(st.session_state.user_preferences.get('preferred_genres', [])))
+            st.metric("Preferred Genres", len(st.session_state.user_preferences.get('preferred_genres', [])))
         with col4:
-            st.metric("🎯 Ready for Recs", "✅" if len(st.session_state.liked_songs) > 0 else "❌")
+            st.metric("Ready for Recs", "✅" if len(st.session_state.liked_songs) > 0 else "❌")
         
         # Quick actions
-        st.subheader("🚀 Quick Actions")
+        st.subheader("Quick Actions")
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("🎲 Discover Random Music", use_container_width=True):
-                st.info("🎵 Discovering random songs for you...")
+            if st.button("Discover Random Music", use_container_width=True):
+                st.info("Discovering random songs for you...")
         
         with col2:
-            if st.button("🎯 Get Recommendations", use_container_width=True):
+            if st.button("Get Recommendations", use_container_width=True):
                 if len(st.session_state.liked_songs) > 0:
-                    st.success("🎯 Getting personalized recommendations...")
+                    st.success("Getting personalized recommendations...")
                 else:
                     st.warning("Like some songs first to get recommendations!")
         
         with col3:
-            if st.button("🎭 Explore Genres", use_container_width=True):
-                st.info("🎭 Exploring genre-based music...")
+            if st.button("Explore Genres", use_container_width=True):
+                st.info("Exploring genre-based music...")
         
         # Recent activity
         if st.session_state.liked_songs:
-            st.subheader("🕒 Your Recent Likes")
+            st.subheader("Your Recent Likes")
             for song in st.session_state.liked_songs[-5:]:
                 st.markdown(f'<div class="song-card">🎵 {song}</div>', unsafe_allow_html=True)
 
-    elif page == "🎼 Browse Songs":
-        st.header("🎼 Browse All Songs")
+    elif page == "Browse Songs":
+        st.header("Browse All Songs")
         
         # Get songs from API
         if api_connected:
@@ -322,7 +323,7 @@ else:
                     data = response.json()
                     songs = data.get('songs', [])
                     
-                    st.success(f"📊 Showing {len(songs)} songs")
+                    st.success(f"Showing {len(songs)} songs")
                     
                     # Display songs in cards
                     for i, song in enumerate(songs):
@@ -342,15 +343,14 @@ else:
                                 song_name = song.get('name', 'Unknown')
                                 if song_name not in st.session_state.liked_songs:
                                     if st.button("❤️ Like", key=f"like_{i}"):
-                                        st.session_state.liked_songs.append(song_name)
-                                        st.success("❤️ Added to your likes!")
-                                        st.rerun()
+                                       st.session_state.liked_songs.append(song_name)
+                                       st.toast(f"'{song_name}' Added to your favorite!", icon="❤️")
                                 else:
-                                    st.button("💚 Liked", key=f"liked_{i}", disabled=True)
+                                    st.button("Liked", key=f"liked_{i}", disabled=True)
                             
                             with col3:
                                 spotify_url = song.get('spotify_url', f"https://open.spotify.com/search/{song.get('name', '')}")
-                                if st.button("🎧 Spotify", key=f"spotify_{i}"):
+                                if st.button("Spotify", key=f"spotify_{i}"):
                                     # Direct redirect using JavaScript
                                     st.markdown(f"""
                                     <script>
@@ -360,7 +360,7 @@ else:
                                     
                                     # Alternative: Show link immediately
                                     st.success(f"🎵 Opening: {song.get('name', 'Unknown')}")
-                                    st.markdown(f"**[🎧 Click here if not opened automatically]({spotify_url})**")
+                                    st.markdown(f"**[Click here if not opened automatically]({spotify_url})**")
                             
                             with col4:
                                 st.markdown("---")
@@ -369,7 +369,7 @@ else:
             except Exception as e:
                 st.error(f"Error: {str(e)}")
         else:
-            st.warning("🔌 API not connected. Showing sample data.")
+            st.warning("API not connected. Showing sample data.")
             # Sample data fallback
             sample_songs = [
                 {"name": "Shape of You", "artist": "Ed Sheeran", "popularity": 95},
@@ -380,25 +380,25 @@ else:
             for song in sample_songs:
                 st.markdown(f'<div class="song-card"><strong>{song["name"]}</strong><br>by {song["artist"]}</div>', unsafe_allow_html=True)
 
-    elif page == "❤️ My Music":
-        st.header("❤️ Your Personal Music Library")
+    elif page == "My Music":
+        st.header("Your Personal Music Library")
         
         if st.session_state.liked_songs:
-            st.success(f"🎵 You have {len(st.session_state.liked_songs)} liked songs!")
+            st.success(f"You have {len(st.session_state.liked_songs)} liked songs!")
             
             # Get recommendations based on liked songs
             if len(st.session_state.liked_songs) >= 3:
-                st.subheader("🎯 Recommendations Based on Your Taste")
-                if st.button("🔮 Get Smart Recommendations"):
+                st.subheader("Recommendations Based on Your Taste")
+                if st.button("Get Smart Recommendations"):
                     if api_connected:
                         try:
                             # Use user's actual ID for collaborative filtering
                             response = requests.get(f"{API_URL}/recommend/collaborative/{st.session_state.user_id}?num=5")
                             if response.status_code == 200:
                                 recs = response.json()
-                                st.success("🎯 Here are songs you might like:")
+                                st.success("Here are songs you might like:")
                                 for rec in recs.get('recommendations', []):
-                                    st.markdown(f'<div class="song-card">🎯 Track Index: {rec.get("track_index")} - Score: {rec.get("predicted_rating", 0):.2f}</div>', unsafe_allow_html=True)
+                                    st.markdown(f'<div class="song-card"> Track Index: {rec.get("track_index")} - Score: {rec.get("predicted_rating", 0):.2f}</div>', unsafe_allow_html=True)
                             else:
                                 st.error("Failed to get recommendations")
                         except Exception as e:
@@ -407,23 +407,53 @@ else:
                         st.warning("API not available for recommendations")
             
             # Show liked songs
+    elif page == "My Music":
+        st.header("❤️ Your Personal Music Library") # Emoji agar konsisten
+
+        if st.session_state.liked_songs:
+            st.success(f"You have {len(st.session_state.liked_songs)} liked songs!")
+
+            # Bagian untuk mendapatkan rekomendasi (jika ada)
+            if len(st.session_state.liked_songs) >= 3:
+                st.subheader("✨ Recommendations Based on Your Taste")
+                if st.button("Get Smart Recommendations"):
+                    if api_connected:
+                        try:
+                            # (Logika panggilan API kamu di sini, ini sudah benar)
+                            response = requests.get(f"{API_URL}/recommend/collaborative/{st.session_state.user_id}?num=5")
+                            if response.status_code == 200:
+                                recs = response.json()
+                                st.success("Here are songs you might like:")
+                                for rec in recs.get('recommendations', []):
+                                    st.markdown(f'<div class="song-card"> Track Index: {rec.get("track_index")} - Score: {rec.get("predicted_rating", 0):.2f}</div>', unsafe_allow_html=True)
+                            else:
+                                st.error("Failed to get recommendations")
+                        except Exception as e:
+                            st.error(f"Error: {str(e)}")
+                    else:
+                        st.warning("API not available for recommendations")
+
             st.subheader("🎵 Your Liked Songs")
-            for i, song in enumerate(st.session_state.liked_songs, 1):
-                col1, col2, col3 = st.columns([1, 4, 1])
+            # Loop melalui semua lagu yang disukai
+            for i, song in enumerate(st.session_state.liked_songs):
+                # Buat kolom untuk setiap lagu di dalam loop
+                col1, col2 = st.columns([8, 1])
                 with col1:
-                    st.write(f"**{i}**")
+                    st.write(f"**{i+1}.** {song}")
                 with col2:
-                    st.markdown(f'<div class="song-card">🎵 {song}</div>', unsafe_allow_html=True)
-                with col3:
-                    if st.button("❌", key=f"remove_{i}"):
+                    if st.button("❌", key=f"remove_{i}", help="Remove this song from your likes"):
                         st.session_state.liked_songs.remove(song)
                         st.rerun()
-        else:
-            st.info("🎵 No liked songs yet! Start exploring to build your personal library.")
+                st.divider() # Garis pemisah antar lagu
 
-    elif page == "🎯 Discover":
-        st.header("🎯 Discover New Music")
-        st.write(f"**🆔 Getting recommendations for User ID: {st.session_state.user_id}**")
+        else:
+            # Pesan yang lebih proaktif saat tidak ada lagu
+            st.info("❤️ You haven't liked any songs yet.")
+            st.warning("Go to the **'Browse Songs'** page to start building your collection!")
+
+    elif page == "Discover":
+        st.header("Discover New Music")
+        st.write(f"**Getting recommendations for User ID: {st.session_state.user_id}**")
         
         # Show model info
         if api_connected:
@@ -433,26 +463,26 @@ else:
                     model_info = model_response.json()
                     
                     st.info(f"""
-                    **🤖 ML Models Loaded:**
-                    - ✅ ALS Collaborative Filtering (RMSE: {model_info['model_performance']['als_rmse']:.4f})
-                    - ✅ KMeans Content-Based
-                    - 📊 Trained on {model_info['model_performance']['trained_records']:,} user interactions
+                    **ML Models Loaded:**
+                    - ALS Collaborative Filtering (RMSE: {model_info['model_performance']['als_rmse']:.4f})
+                    - KMeans Content-Based
+                    - Trained on {model_info['model_performance']['trained_records']:,} user interactions
                     """)
             except:
                 pass
         
         discovery_type = st.radio("Choose discovery method:", [
-            "👥 Collaborative Filtering (ALS Model)",
-            "🎵 Content-Based (KMeans Model)", 
-            "🎲 Random Discovery",
-            "🆕 Popular Songs"
+            "Collaborative Filtering (ALS Model)",
+            "Content-Based (KMeans Model)", 
+            "Random Discovery",
+            "Popular Songs"
         ])
         
-        if st.button("🚀 Discover Music!", use_container_width=True):
+        if st.button("Discover Music!", use_container_width=True):
             
-            with st.spinner('🔍 Using ML models to discover music...'):
+            with st.spinner('Using ML models to discover music...'):
                 
-                if discovery_type == "👥 Collaborative Filtering (ALS Model)" and api_connected:
+                if discovery_type == "Collaborative Filtering (ALS Model)" and api_connected:
                     try:
                         response = requests.get(f"{API_URL}/recommend/collaborative/{st.session_state.user_id}?num=10")
                         if response.status_code == 200:
@@ -460,8 +490,8 @@ else:
                             recommendations = data.get('recommendations', [])
                             
                             if recommendations:
-                                st.success(f"🎯 ALS Model found {len(recommendations)} personalized recommendations!")
-                                st.info(f"📊 Based on {data.get('trained_on', 'N/A')} user interactions")
+                                st.success(f"ALS Model found {len(recommendations)} personalized recommendations!")
+                                st.info(f"Based on {data.get('trained_on', 'N/A')} user interactions")
                                 
                                 # Display real model recommendations
                                 for i, rec in enumerate(recommendations, 1):
@@ -474,19 +504,19 @@ else:
                                         with col2:
                                             st.markdown(f"""
                                             <div class="song-card">
-                                                🎯 <strong>{rec.get('track_name', 'Unknown')}</strong><br>
-                                                👤 by {rec.get('artist_name', 'Unknown Artist')}<br>
-                                                ⭐ Predicted Rating: {rec.get('predicted_rating', 0):.2f}/5.0<br>
-                                                🔢 Track Index: {rec.get('track_index', 'N/A')}
+                                                 <strong>{rec.get('track_name', 'Unknown')}</strong><br>
+                                                 by {rec.get('artist_name', 'Unknown Artist')}<br>
+                                                 Predicted Rating: {rec.get('predicted_rating', 0):.2f}/5.0<br>
+                                                 Track Index: {rec.get('track_index', 'N/A')}
                                             </div>
                                             """, unsafe_allow_html=True)
                                         
                                         with col3:
-                                            if st.button("❤️ Like", key=f"als_like_{i}"):
+                                            if st.button("Like", key=f"als_like_{i}"):
                                                 track_name = rec.get('track_name', f"Track_{rec.get('track_index')}")
                                                 if track_name not in st.session_state.liked_songs:
                                                     st.session_state.liked_songs.append(track_name)
-                                                    st.success("❤️ Added to liked songs!")
+                                                    st.success("Added to liked songs!")
                                                 
                                                 spotify_url = rec.get('spotify_url', '#')
                                                 if st.button("🎧", key=f"als_spotify_{i}"):
@@ -496,7 +526,7 @@ else:
                     except Exception as e:
                         st.error(f"Error: {str(e)}")
                 
-                elif discovery_type == "🎵 Content-Based (KMeans Model)" and api_connected:
+                elif discovery_type == " Content-Based (KMeans Model)" and api_connected:
                     # Content-based recommendations
                     if st.session_state.liked_songs:
                         seed_song = st.session_state.liked_songs[-1]  # Use last liked song
@@ -506,14 +536,14 @@ else:
                                 data = response.json()
                                 recommendations = data.get('recommendations', [])
                                 
-                                st.success(f"🎵 KMeans found {len(recommendations)} similar to '{seed_song}'!")
+                                st.success(f" KMeans found {len(recommendations)} similar to '{seed_song}'!")
                                 
                                 for rec in recommendations:
                                     st.markdown(f"""
                                     <div class="song-card">
-                                        🎵 <strong>{rec.get('name', 'Unknown')}</strong><br>
-                                        👤 by {rec.get('artist', 'Unknown')}<br>
-                                        📊 Similarity: {rec.get('similarity_score', 0):.2f}
+                                         <strong>{rec.get('name', 'Unknown')}</strong><br>
+                                         by {rec.get('artist', 'Unknown')}<br>
+                                         Similarity: {rec.get('similarity_score', 0):.2f}
                                     </div>
                                     """, unsafe_allow_html=True)
                         except Exception as e:
@@ -522,15 +552,15 @@ else:
                         st.warning("Like some songs first for content-based recommendations!")
                 
                 else:
-                    st.success(f"🎵 Discovering music using: {discovery_type}")
-                    st.info("💡 This feature will be enhanced with more discovery algorithms!")
+                    st.success(f" Discovering music using: {discovery_type}")
+                    st.info(" This feature will be enhanced with more discovery algorithms!")
     
-    elif page == "🔄 Real-Time Batches":
+    elif page == " Real-Time Batches":
         """Show real-time batch monitoring dashboard"""
-        st.title("🔄 Real-Time Batch Monitoring")
+        st.title(" Real-Time Batch Monitoring")
         
         # Auto-refresh every 30 seconds
-        if st.button("🔄 Refresh Data"):
+        if st.button(" Refresh Data"):
             st.rerun()
         
         try:
@@ -553,7 +583,7 @@ else:
                     st.metric("Avg Rating", f"{latest_batch['ui_summary']['avg_rating']:.2f}")
                 
                 # Featured Tracks Cards
-                st.subheader("🎵 Featured Tracks dari Latest Batch")
+                st.subheader(" Featured Tracks dari Latest Batch")
                 
                 featured_tracks = latest_batch['ui_summary']['featured_tracks']
                 
@@ -566,14 +596,14 @@ else:
                         st.image(track['image_url'], width=200)
                         st.markdown(f"**{track['name']}**")
                         st.markdown(f"*{track['artist_name']}*")
-                        st.markdown(f"😊 {track['emotion']}")
-                        st.markdown(f"⭐ {track['popularity']}/100")
+                        st.markdown(f" {track['emotion']}")
+                        st.markdown(f" {track['popularity']}/100")
                         
                         # Clickable link to Spotify
                         st.markdown(f"[🎵 Play on Spotify]({track['external_url']})")
                 
                 # Emotion Distribution Chart
-                st.subheader("😊 Emotion Distribution")
+                st.subheader("Emotion Distribution")
                 
                 emotion_data = latest_batch['ui_summary']['emotion_distribution']
                 if emotion_data:
@@ -587,7 +617,7 @@ else:
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Action Distribution
-                st.subheader("🎯 User Actions")
+                st.subheader("User Actions")
                 
                 action_data = latest_batch['training_summary']['action_distribution']
                 if action_data:
@@ -602,7 +632,7 @@ else:
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Popular Artists
-                st.subheader("🎤 Popular Artists")
+                st.subheader("Popular Artists")
                 
                 popular_artists = latest_batch['ui_summary']['popular_artists']
                 if popular_artists:
@@ -619,17 +649,17 @@ else:
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Raw batch data (expandable)
-                with st.expander("🔍 View Raw Batch Data"):
+                with st.expander("View Raw Batch Data"):
                     st.json(latest_batch)
                     
             else:
-                st.error("❌ Could not fetch batch data")
+                st.error("Could not fetch batch data")
                 
         except Exception as e:
-            st.error(f"❌ Error: {e}")
+            st.error(f"Error: {e}")
 
-    elif page == "📊 Batch History":
-        st.title("📊 Batch History & Trends")
+    elif page == "Batch History":
+        st.title("Batch History & Trends")
         
         try:
             # Get all batch files
@@ -644,7 +674,7 @@ else:
                     df['timestamp'] = pd.to_datetime(df['timestamp'])
                     
                     # Batch size over time
-                    st.subheader("📈 Batch Size Trends")
+                    st.subheader("Batch Size Trends")
                     fig = px.line(
                         df,
                         x='timestamp',
@@ -665,12 +695,12 @@ else:
                         st.metric("Total Interactions", df['size'].sum())
                     
                     # Batch files table
-                    st.subheader("📋 All Batch Files")
+                    st.subheader("All Batch Files")
                     display_df = df[['batch_id', 'size', 'timestamp']].copy()
                     display_df['timestamp'] = display_df['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
                     st.dataframe(display_df, use_container_width=True)
                 else:
-                    st.info("📝 No batch files found yet")
+                    st.info("No batch files found yet")
                     
         except Exception as e:
-            st.error(f"❌ Error: {e}")
+            st.error(f"Error: {e}")
