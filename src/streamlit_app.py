@@ -333,7 +333,7 @@ else:
                             
                             with col1:
                                 st.markdown(f"**🎵 {song.get('name', 'Unknown Song')}**")
-                                st.caption(f"👤 {song.get('artist', 'Unknown Artist')}")
+                                st.caption(f"{song.get('artist', 'Unknown Artist')}")
                                 
                                 # Popularity bar
                                 popularity = song.get('popularity', 0)
@@ -353,9 +353,7 @@ else:
                                 spotify_url = song.get('spotify_url', f"https://open.spotify.com/search/{song.get('name', '')}")
                                 # Gunakan st.link_button
                                 st.link_button("Spotify", spotify_url, use_container_width=True)
-                            
-                            with col4:
-                                st.markdown("---")
+                     
                 else:
                     st.error("Failed to fetch songs from API")
             except Exception as e:
@@ -371,6 +369,16 @@ else:
             
             for song in sample_songs:
                 st.markdown(f'<div class="song-card"><strong>{song["name"]}</strong><br>by {song["artist"]}</div>', unsafe_allow_html=True)
+
+# GENRES PAGE
+    elif page == "Genres":
+        st.header("Explore by Genre")
+        st.info("This feature is under development!")
+
+# MOODS PAGE
+    elif page == "Moods":
+        st.header("Find Music for Your Mood")
+        st.info("This feature is under development!")
 
             # Show liked songs
     elif page == "My Music":
