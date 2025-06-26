@@ -7,6 +7,7 @@ import hashlib
 from datetime import datetime
 import plotly.express as px
 import plotly.graph_objects as go
+from streamlit_autorefresh import st_autorefresh
 
 st.set_page_config(
     page_title="MusicBot - Personal Music Discovery",
@@ -350,17 +351,8 @@ else:
                             
                             with col3:
                                 spotify_url = song.get('spotify_url', f"https://open.spotify.com/search/{song.get('name', '')}")
-                                if st.button("Spotify", key=f"spotify_{i}"):
-                                    # Direct redirect using JavaScript
-                                    st.markdown(f"""
-                                    <script>
-                                    window.open('{spotify_url}', '_blank');
-                                    </script>
-                                    """, unsafe_allow_html=True)
-                                    
-                                    # Alternative: Show link immediately
-                                    st.success(f"🎵 Opening: {song.get('name', 'Unknown')}")
-                                    st.markdown(f"**[Click here if not opened automatically]({spotify_url})**")
+                                # Gunakan st.link_button
+                                st.link_button("Spotify", spotify_url, use_container_width=True)
                             
                             with col4:
                                 st.markdown("---")
@@ -380,42 +372,16 @@ else:
             for song in sample_songs:
                 st.markdown(f'<div class="song-card"><strong>{song["name"]}</strong><br>by {song["artist"]}</div>', unsafe_allow_html=True)
 
-    elif page == "My Music":
-        st.header("Your Personal Music Library")
-        
-        if st.session_state.liked_songs:
-            st.success(f"You have {len(st.session_state.liked_songs)} liked songs!")
-            
-            # Get recommendations based on liked songs
-            if len(st.session_state.liked_songs) >= 3:
-                st.subheader("Recommendations Based on Your Taste")
-                if st.button("Get Smart Recommendations"):
-                    if api_connected:
-                        try:
-                            # Use user's actual ID for collaborative filtering
-                            response = requests.get(f"{API_URL}/recommend/collaborative/{st.session_state.user_id}?num=5")
-                            if response.status_code == 200:
-                                recs = response.json()
-                                st.success("Here are songs you might like:")
-                                for rec in recs.get('recommendations', []):
-                                    st.markdown(f'<div class="song-card"> Track Index: {rec.get("track_index")} - Score: {rec.get("predicted_rating", 0):.2f}</div>', unsafe_allow_html=True)
-                            else:
-                                st.error("Failed to get recommendations")
-                        except Exception as e:
-                            st.error(f"Error: {str(e)}")
-                    else:
-                        st.warning("API not available for recommendations")
-            
             # Show liked songs
     elif page == "My Music":
-        st.header("❤️ Your Personal Music Library") # Emoji agar konsisten
+        st.header("❤️ Your Personal Music Library") 
 
         if st.session_state.liked_songs:
             st.success(f"You have {len(st.session_state.liked_songs)} liked songs!")
 
             # Bagian untuk mendapatkan rekomendasi (jika ada)
             if len(st.session_state.liked_songs) >= 3:
-                st.subheader("✨ Recommendations Based on Your Taste")
+                st.subheader("Recommendations Based on Your Taste")
                 if st.button("Get Smart Recommendations"):
                     if api_connected:
                         try:
@@ -495,34 +461,30 @@ else:
                                 
                                 # Display real model recommendations
                                 for i, rec in enumerate(recommendations, 1):
-                                    with st.container():
-                                        col1, col2, col3 = st.columns([1, 4, 2])
+                                    with st.container(border=True):
+                                        col1, col2, col3 = st.columns([5, 1, 1]) 
+
+                                        track_name = rec.get('track_name', 'Unknown')
+                                        artist_name = rec.get('artist_name', 'Unknown Artist')
+                                        spotify_url = rec.get('spotify_url', '#')
                                         
                                         with col1:
-                                            st.markdown(f"**#{i}**")
+                                            st.markdown(f"**{i}. {track_name}**")
+                                            st.caption(f"by {artist_name} | Score: {rec.get('predicted_rating', 0):.2f}")
                                         
                                         with col2:
-                                            st.markdown(f"""
-                                            <div class="song-card">
-                                                 <strong>{rec.get('track_name', 'Unknown')}</strong><br>
-                                                 by {rec.get('artist_name', 'Unknown Artist')}<br>
-                                                 Predicted Rating: {rec.get('predicted_rating', 0):.2f}/5.0<br>
-                                                 Track Index: {rec.get('track_index', 'N/A')}
-                                            </div>
-                                            """, unsafe_allow_html=True)
-                                        
-                                        with col3:
-                                            if st.button("Like", key=f"als_like_{i}"):
-                                                track_name = rec.get('track_name', f"Track_{rec.get('track_index')}")
+                                            # Logika "Like" yang sudah rapi
+                                            if st.button("❤️", key=f"discover_like_{track_name}_{i}", help="Like this song"):
                                                 if track_name not in st.session_state.liked_songs:
-                                                    st.session_state.liked_songs.append(track_name)
-                                                    st.success("Added to liked songs!")
-                                                
-                                                spotify_url = rec.get('spotify_url', '#')
-                                                if st.button("🎧", key=f"als_spotify_{i}"):
-                                                    st.markdown(f"[🎵 Open Spotify]({spotify_url})")
-                        else:
-                            st.warning("No recommendations found. Try different user ID!")
+                                                   st.session_state.liked_songs.append(track_name)
+                                                   st.toast(f"Liked '{track_name}'!", icon="❤️")
+                                                else:
+                                                    st.toast(f"You already liked '{track_name}'.", icon="✅")
+                                        with col3:
+                                            # Tombol Spotify yang bersih
+                                            st.link_button("🎧", url=spotify_url, help="Play on Spotify", use_container_width=True)
+                            else:
+                                st.warning("No recommendations found. Try a different user ID!")
                     except Exception as e:
                         st.error(f"Error: {str(e)}")
                 
@@ -557,11 +519,8 @@ else:
     
     elif page == " Real-Time Batches":
         """Show real-time batch monitoring dashboard"""
-        st.title(" Real-Time Batch Monitoring")
-        
-        # Auto-refresh every 30 seconds
-        if st.button(" Refresh Data"):
-            st.rerun()
+        st.title("Real-Time Batch Monitoring")
+        st_autorefresh(interval=30000, limit=100, key="batch_refresher")
         
         try:
             # Get latest batch data
