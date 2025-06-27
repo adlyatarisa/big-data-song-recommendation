@@ -62,3 +62,23 @@ big-data-song-recommendation/
    cd docker
    docker compose up --build
    ```
+
+## Dokumentasi Pengerjaan 
+
+### Tampilan web MusicBot
+
+![image](https://github.com/user-attachments/assets/d834edc4-4a89-46a8-b1c0-41d569b62aaf)
+
+Berikut merupakan tampilan dari web MusicBot, yang akan memberikan rekomendasi musik kepada user melalui popularitas lagu dari data yang ada. Beberapa fitur lain yang melengkapi adalah adanya fitur klik 'like' untuk user ketika user menyukai suatu lagi, serta klik 'direct link to song' untuk memberikan pengalaman mendengarkan lagu langsung kepada user dengan mengarahkan mereka ke aplikasi Spotify untuk mendengarkan lagu sesuai preferensi.
+
+### Rekomendasi berdasar popularitas lagu
+
+![image](https://github.com/user-attachments/assets/48991efe-9cb8-4970-b180-e2fab210fcfe)
+
+Rekomendasi lagu diberikan berdasar data popularitas dari tiap lagu, sehingga pengguna bisa mendapatkan rekomendasi lagu untuk didengarkan.
+
+### Fitur direct link to song
+
+https://github.com/user-attachments/assets/488e15c0-d8ba-4ed3-9532-721bd97dcc04
+
+Fitur direc link to song untuk memberikan pengalaman langsung kepada user untuk tidak hanya sekedar mendapatkan rekomendasi, tetapi juga bisa mendengarkan lagu tersebut.
