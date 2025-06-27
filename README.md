@@ -176,4 +176,7 @@ Fitur direct link to song untuk memberikan pengalaman yang lebih kaya kepada pen
 ---
 
 <p align="center"><strong style="font-size: 32px;">TERIMA KASIH</strong></p>
-<p align="center">semoga harimu seindah playlist favoritmu💖</p>
+<p align="center">💖semoga harimu seindah playlist favoritmu💖</p>
+<p align="center">
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWNwOTZpdG52NDd6angwNTE1MjNuMjl4NjA5b2duZ2s1OGxvZW5hNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CpZkCpBfZ0gXdk3OFK/giphy.gif" width="300"/>
+</p>
